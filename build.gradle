@@ -19,8 +19,9 @@ apply plugin: 'io.spring.dependency-management'
 group = 'com.WDB40'
 
 bootJar {
-    baseName = 'producting-web-service'
+    baseName = 'producing-web-service'
     version = '0.1.0'
+    from genJaxb.classesDir
 }
 
 sourceCompatibility = 1.8
@@ -30,8 +31,17 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    jaxb
+}
+
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter-web-services')
+    compile('wsdl4j:wsdl4j:1.6.1')
+    jaxb('org.glassfish.jaxb:jaxb-xjc:2.2.11')
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+
 }
